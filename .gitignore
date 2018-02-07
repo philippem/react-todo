@@ -1,6 +1,8 @@
-node_modules
-dist
+node_modules/
+dist/
 npm-debug.*
-data
+data/*
 .nyc_output
 coverage
+.idea/
+*.iml

@@ -9,7 +9,7 @@
     "clean:db": "rimraf data/*.sqlite",
     "precoverage": "npm run clean:coverage",
     "coverage": "cross-env BABEL_ENV=instrument nyc npm test",
-    "db": "sequelize db:migrate && sequelize db:seed:all",
+    "db": "mkdir -p data && sequelize db:migrate && sequelize db:seed:all",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "cross-env NODE_ENV=test NODE_PATH=./src mocha --opts mocha.opts \"src/test/unit/**/*.test.js\"",
     "pretest:integration": "rimraf data/database-test.sqlite && cross-env NODE_ENV=test npm run db",
@@ -20,6 +20,7 @@
     "prestart": "cross-env NODE_ENV=production npm run db",
     "start": "npm run build && npm run start:prod",
     "prestart-watch": "cross-env NODE_ENV=development npm run db",
+    "start:redis-dev": "docker run -p 6379:6379 -d redis",
     "start-watch": "concurrently -r --kill-others \"npm run build-watch\" \"npm run start:dev\"",
     "start:prod": "cross-env NODE_ENV=production node dist/server/server.js",
     "start:dev": "wait-on dist/server/server.js  dist/server/stats.json && cross-env NODE_ENV=development nodemon --inspect dist/server/server.js"
